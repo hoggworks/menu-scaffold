@@ -1,0 +1,82 @@
+body {
+  margin: 0px;
+  padding: 0px;
+}
+
+.scaffold {
+  width: 100%;
+}
+
+.scaffold__modal {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background: transparent;
+  left: 0px;
+  top: 0px;
+}
+
+.scaffold__modal--open {
+  left: 300px;
+  -webkit-transition: left 0.2s;
+  transition: left 0.2s;
+}
+
+.scaffold__nav {
+  width: 300px;
+  background: #ccc;
+  height: 100%;
+  overflow-x: scroll;
+  position: fixed;
+  left: -300px;
+  -webkit-transition: left 0.2s;
+  transition: left 0.2s;
+}
+
+.scaffold__nav--open {
+  -webkit-transition: left 0.5s;
+  transition: left 0.2s;
+  left: 0px;
+
+}
+
+.scaffold__nav-content {
+
+}
+
+.scaffold__content {
+  padding-top: 20px;
+  width: 100%;
+  width: calc(100% - 50px);
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  padding-left: 25px;
+  padding-right: 25px;
+  -webkit-transition: left 0.2s;
+  transition: left 0.2s;
+}
+
+.scaffold__content--open {
+  left: 300px;
+  -webkit-transition: left 0.2s;
+  transition: left 0.2s;
+}
+
+.top-nav {
+  position: fixed;
+  top: 0px;
+  height: 20px;
+  background-color: #fff;
+  width: 100%;
+}
+
+.left-nav__option {
+  width: 100%;
+  height: 50px;
+  padding-top: 20px;
+  font-size: 20px;
+  text-align: center;
+  font-weight: bold;
+}
+
