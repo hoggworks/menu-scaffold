@@ -10,22 +10,27 @@
     <div class="scaffold__nav">
       <div class="scaffold__nav-content">
         <div class="scaffold__nav-close-btn">X</div>
-
         <div class="left-nav">
-          <div class="left-nav__option">OPTION 1</div>
-          <div class="left-nav__option">OPTION 2</div>
-          <div class="left-nav__option">OPTION 3</div>
-          <div class="left-nav__option">OPTION 4</div>
-          <div class="left-nav__option">OPTION 5</div>
-          <div class="left-nav__option">OPTION 6</div>
-          <div class="left-nav__option">OPTION 7</div>
-          <div class="left-nav__option">OPTION 8</div>
-          <div class="left-nav__option">OPTION 9</div>
-          <div class="left-nav__option">OPTION 10</div>
-          <div class="left-nav__option">OPTION 11</div>
-          <div class="left-nav__option">OPTION 12</div>
-          <div class="left-nav__option">OPTION 13</div>
+          <div class="left-nav__item--nav-level-1" data-role="has_subnav" data-children="1">OPTION 1</div>
+          <div class="left-nav__item--nav-level-2" data-url="sub.html" data-parent="1">SUB 1</div>
+          <div class="left-nav__item--nav-level-2" data-url="sub.html" data-parent="1">SUB 2</div>
+          <div class="left-nav__item--nav-level-2" data-url="sub.html" data-parent="1">SUB 3</div>
+          <div class="left-nav__item--nav-level-2" data-role="has_subnav" data-parent="1" data-children="2">SUB 4</div>
+          <div class="left-nav__item--nav-level-3" data-url="subsub.html" data-parent="2">SUB SUB 1</div>
+          <div class="left-nav__item--nav-level-3" data-url="subsub.html" data-parent="2">SUB SUB 2</div>
+          <div class="left-nav__item--nav-level-3" data-url="subsub.html" data-parent="2">SUB SUB 3</div>
+          <div class="left-nav__item--nav-level-3" data-url="subsub.html" data-parent="2">SUB SUB 4</div>
+          <div class="left-nav__item--nav-level-3" data-role="has_subnav" data-parent="2" data-children="3">SUB SUB 4</div>
+          <div class="left-nav__item--nav-level-4" data-url="subsub.html" data-parent="3">SUB SUB SUB 1</div>
+          <div class="left-nav__item--nav-level-4" data-url="subsub.html" data-parent="3">SUB SUB SUB 2</div>
+          <div class="left-nav__item--nav-level-4" data-url="subsub.html" data-parent="3">SUB SUB SUB 3</div>
 
+
+          <div class="left-nav__item--nav-level-2" data-url="sub.html" data-parent="1">SUB 5</div>
+          <div class="left-nav__item--nav-level-1" data-url="option.html">OPTION 2</div>
+          <div class="left-nav__item--nav-level-1" data-url="option.html">OPTION 3</div>
+          <div class="left-nav__item--nav-level-1" data-url="option.html">OPTION 4</div>
+          <div class="left-nav__item--nav-level-1" data-url="option.html">OPTION 5</div>
         </div>
       </div>
     </div>
