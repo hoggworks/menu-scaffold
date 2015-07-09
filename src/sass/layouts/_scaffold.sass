@@ -1,0 +1,65 @@
+/* SCAFFOLD */
+.scaffold
+  width: 100%
+  height: 100%
+  overflow: hidden
+  position: relative
+
+.scaffold__modal
+  width: 100%
+  height: 100%
+  position: fixed
+  background: transparent
+  left: 0px
+  top: 0px
+  z-index: 3
+
+.scaffold__modal--open
+  left: $left-menu-width
+  -webkit-transition: left $transition-speed
+  transition: left $transition-speed
+
+/* SCAFFOLD MENU */
+.scaffold__menu
+  width: $left-menu-width
+  background: $menu-bg-color
+  height: 100%
+  overflow-x: scroll
+  position: fixed
+  left: -$left-menu-width
+  -webkit-transition: left $transition-speed
+  transition: left $transition-speed
+  z-index: 2
+
+.scaffold__menu--open
+  -webkit-transition: left $transition-speed
+  transition: left $transition-speed
+  left: 0px
+
+.scaffold__menu-content
+
+/* SCAFFOLD CONTENT */
+.scaffold__content
+  padding-top: $site-padding-top
+  width: 100%
+  height: 100%
+  position: absolute
+  overflow-x: hidden
+  left: 0px
+  top: 0px
+  -webkit-transition: left $transition-speed
+  transition: left $transition-speed
+  z-index: 1
+
+.scaffold__content-inside
+  width: 100%
+  padding-left: 25px
+  padding-right: 25px
+  position: relative
+
+.scaffold__content--open
+  left: $left-menu-width
+  -webkit-transition: left $transition-speed
+  transition: left $transition-speed
+
+

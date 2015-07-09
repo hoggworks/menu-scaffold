@@ -1,0 +1,214 @@
+/* Screen Sizes */
+/* Transitions */
+/* Colours */
+/* base colour sub menu items draw from. */
+/* each level of sub menu is 10% darker */
+/* Fonts */
+/* Misc */
+html {
+  box-sizing: border-box; }
+
+*, *:before, *:after {
+  box-sizing: inherit; }
+
+body {
+  font-family: "Arial";
+  font-size: em(14px);
+  background-color: #ffffff;
+  margin: 0;
+  padding: 0; }
+
+img {
+  max-width: 100%; }
+
+.alignnone {
+  margin-left: 0;
+  margin-right: 0;
+  max-width: 100%;
+  height: auto; }
+
+.aligncenter {
+  display: block;
+  margin: 0.5em auto; }
+
+.alignleft, .alignright {
+  margin-bottom: 0.5em; }
+
+h1, h2, h3, h4, h5 {
+  margin-top: 10px;
+  margin-bottom: 10px; }
+
+h1, h2, h3 {
+  font-family: "Arial";
+  font-weight: bold; }
+
+h1 {
+  font-size: 40px; }
+
+h2 {
+  font-size: 32px; }
+
+h3 {
+  font-size: 24px; }
+
+h4 {
+  font-size: 18px; }
+
+h4, h5 {
+  font-weight: bold; }
+
+.site-container__content-wrapper-insides {
+  min-height: 700px; }
+
+li {
+  font-size: 15px; }
+
+p {
+  font-size: 15px;
+  line-height: 1.8;
+  margin-bottom: 15px; }
+
+table {
+  font-size: 14px; }
+  @media (min-width: 1200px) {
+    table {
+      font-size: 18px; } }
+
+a a:link, a:hover, a:active, a:focus {
+  outline: 0;
+  highlight: none;
+  color: black; }
+  a a:link img, a:hover img, a:active img, a:focus img {
+    highlight: none;
+    outline: 0; }
+
+/* TOP MENU */
+.top-menu {
+  position: fixed;
+  top: 0px;
+  height: 20px;
+  background-color: #ffffff;
+  width: 100%; }
+
+/* SCAFFOLD MENU ITEMS */
+.left-menu__item-depth-1, .left-menu__item-depth-2, .left-menu__item-depth-3, .left-menu__item-depth-4, .left-menu__item-depth-5, .left-menu__item-depth-6, .left-menu__item-depth-7, .left-menu__item-depth-8, .left-menu__item-depth-9, .left-menu__item-depth-10 {
+  width: 100%;
+  height: 50px;
+  padding-top: 20px;
+  font-size: 20px;
+  text-align: center;
+  cursor: pointer; }
+/* Fancy-pants colour-loop for sub menu items. */
+.left-menu__item-depth-1 {
+  background: #ededed; }
+
+.left-menu__item-depth-2 {
+  background: #e3e3e3; }
+
+.left-menu__item-depth-3 {
+  background: gainsboro; }
+
+.left-menu__item-depth-4 {
+  background: #d1d1d1; }
+
+.left-menu__item-depth-5 {
+  background: #c7c7c7; }
+
+.left-menu__item-depth-6 {
+  background: #bdbdbd; }
+
+.left-menu__item-depth-7 {
+  background: #b3b3b3; }
+
+.left-menu__item-depth-8 {
+  background: darkgray; }
+
+.left-menu__item-depth-9 {
+  background: #9e9e9e; }
+
+.left-menu__item-depth-10 {
+  background: #949494; }
+
+[data-role="has_submenu"]::after {
+  content: ">";
+  margin-left: 5px; }
+
+[data-parent] {
+  display: none; }
+
+.menu__open-side-menu {
+  display: block; }
+  @media (min-width: 661px) {
+    .menu__open-side-menu {
+      display: none; } }
+
+@media (max-width: 660px) {
+  .top-menu__content {
+    display: none; } }
+@media (min-width: 661px) {
+  .top-menu__content {
+    display: block; } }
+
+/* SCAFFOLD */
+.scaffold {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative; }
+
+.scaffold__modal {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background: transparent;
+  left: 0px;
+  top: 0px;
+  z-index: 3; }
+
+.scaffold__modal--open {
+  left: 200px;
+  -webkit-transition: left 0.2s;
+  transition: left 0.2s; }
+
+/* SCAFFOLD MENU */
+.scaffold__menu {
+  width: 200px;
+  background: #ccc;
+  height: 100%;
+  overflow-x: scroll;
+  position: fixed;
+  left: -200px;
+  -webkit-transition: left 0.2s;
+  transition: left 0.2s;
+  z-index: 2; }
+
+.scaffold__menu--open {
+  -webkit-transition: left 0.2s;
+  transition: left 0.2s;
+  left: 0px; }
+
+/* SCAFFOLD CONTENT */
+.scaffold__content {
+  padding-top: 20px;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  overflow-x: hidden;
+  left: 0px;
+  top: 0px;
+  -webkit-transition: left 0.2s;
+  transition: left 0.2s;
+  z-index: 1; }
+
+.scaffold__content-inside {
+  width: 100%;
+  padding-left: 25px;
+  padding-right: 25px;
+  position: relative; }
+
+.scaffold__content--open {
+  left: 200px;
+  -webkit-transition: left 0.2s;
+  transition: left 0.2s; }
+
+/*# sourceMappingURL=main.css.map */

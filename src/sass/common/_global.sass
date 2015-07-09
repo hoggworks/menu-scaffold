@@ -1,0 +1,111 @@
+@mixin filter( $var )
+  -webkit-filter: $var
+  -moz-filter: $var
+  -ms-filter: $var
+  -o-filter: $var
+  filter: $var
+
+@mixin border-radius($radius)
+  -webkit-border-radius: $radius
+  -moz-border-radius: $radius
+  -ms-border-radius: $radius
+  border-radius: $radius
+
+@mixin setBoxShadow($baseColor)
+  box-shadow: 0 4px 9px $baseColor
+
+@mixin setBoxShadowSmall($baseColor)
+  box-shadow: 0 2px 1px $baseColor
+
+@mixin setBoxShadowHover($baseColor)
+  transition: box-shadow .1s ease-out
+  &:hover
+    box-shadow: 0 2px 1px $baseColor
+
+@mixin setBgColorAndHover($baseColor)
+  background-color: $baseColor
+  &:hover
+    background-color: darken($baseColor, 3%)
+
+// calc ems
+@function em($target, $context:$base-fontsize)
+  //@return ($target / $context) * 1em
+  /* TODO: FIX THIS */
+  @return $target
+
+html
+  box-sizing: border-box
+
+*, *:before, *:after
+  box-sizing: inherit
+
+body
+  font-family: $default-font
+  font-size: $base-fontsize
+  background-color: $bg-color
+  margin: 0
+  padding: 0
+
+img
+  max-width: 100%
+
+
+.alignnone
+  margin-left: 0
+  margin-right: 0
+  max-width: 100%
+  height: auto
+
+.aligncenter
+  display: block
+  margin: ($line-height-computed / 2) auto
+
+.alignleft, .alignright
+  margin-bottom: ($line-height-computed / 2)
+
+h1, h2, h3, h4, h5
+  margin-top: em(10px)
+  margin-bottom: em(10px)
+
+h1, h2, h3
+  font-family: $title-font
+  font-weight: bold
+
+h1
+  font-size: em(40px)
+h2
+  font-size: em(32px)
+h3
+  font-size: em(24px)
+h4
+  font-size: em(18px)
+
+h4,h5
+  font-weight: bold
+
+.site-container__content-wrapper-insides
+  min-height: 700px
+
+li
+  font-size: em(15px)
+
+p
+  font-size: em(15px)
+  line-height: 1.8
+  margin-bottom: em(15px)
+
+table
+  font-size: 14px
+
+  @media (min-width: 1200px)
+    font-size: 18px
+
+// reset
+a a:link, a:hover, a:active, a:focus
+  outline: 0
+  highlight: none
+  color: black
+  img
+    highlight: none
+    outline: 0
+

@@ -1,0 +1,45 @@
+/* TOP MENU */
+.top-menu
+  position: fixed
+  top: 0px
+  height: 20px
+  background-color: $bg-color
+  width: 100%
+
+/* SCAFFOLD MENU ITEMS */
+%left-menu__item
+  width: 100%
+  height: 50px
+  padding-top: 20px
+  font-size: 20px
+  text-align: center
+  cursor: pointer
+
+  &--open
+    font-weight: bold
+
+/* Fancy-pants colour-loop for sub menu items. */
+@for $i from 1 through length($left-menu-darken-amounts)
+  .left-menu__item-depth-#{$i}
+    @extend %left-menu__item
+    background: darken($left-menu-item-bg-color, nth($left-menu-darken-amounts, $i))
+
+[data-role="has_submenu"]::after
+  content: '>'
+  margin-left: 5px
+
+[data-parent]
+  display: none
+
+.menu__open-side-menu
+  display: block
+  @media (min-width: $desktop-min-width)
+    display: none
+
+.top-menu__content
+  @media (max-width: $mobile-max-width)
+    display: none
+
+  @media (min-width: $desktop-min-width)
+    display: block
+
