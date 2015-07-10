@@ -29,7 +29,6 @@
     for (_i = 0, _len = submenus.length; _i < _len; _i++) {
       submenu = submenus[_i];
       if ($("body").hasClass(submenu)) {
-        console.log("FOUND THAT SUMBITCH");
         subMenuToActivate = $('*[data-children="' + submenu + '"]');
         showSubMenuItems(subMenuToActivate);
         if (subMenuToActivate.data('parent')) {
@@ -57,7 +56,6 @@
         }
       }
       child_element_val = subMenu.data('children');
-      console.log(child_state, new_child_state, child_element_val);
       $("*[data-parent='" + child_element_val + "']").each(function() {
         if (new_child_state === 'hidden') {
           $(this).slideUp();
@@ -114,7 +112,6 @@
     parentID = subMenu.data('parent');
     parentMenuItem = $("*[data-children='" + parentID + "']");
     showSubMenuItems(parentMenuItem);
-    console.log(parentMenuItem);
     if (parentMenuItem.data('parent')) {
       return showAllParentsOf(parentMenuItem);
     }

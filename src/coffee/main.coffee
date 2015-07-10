@@ -29,9 +29,7 @@ $ ->
   for submenu in submenus
     if $("body").hasClass submenu
       # found the submenu: activate
-      console.log "FOUND THAT SUMBITCH"
       subMenuToActivate = $('*[data-children="'+submenu+'"]')
-      #$('*[data-children="'+submenu+'"]').click
       showSubMenuItems(subMenuToActivate)
 
       if (subMenuToActivate.data('parent'))
@@ -50,8 +48,6 @@ showSubMenuItems = (subMenu) ->
         new_child_state = 'visible'
 
     child_element_val = subMenu.data 'children'
-
-    console.log child_state, new_child_state, child_element_val
 
     $("*[data-parent='"+child_element_val+"']").each ->
       if new_child_state == 'hidden'
@@ -123,10 +119,6 @@ showAllParentsOf = (subMenu) ->
   # show all children of this parent menu item
   showSubMenuItems(parentMenuItem)
 
-  console.log parentMenuItem
 
   if parentMenuItem.data 'parent'
     showAllParentsOf parentMenuItem
-
-  # update child_state of parent element
-  #$("*[data-children='"+val+"']").data 'child_state', 'hidden'
