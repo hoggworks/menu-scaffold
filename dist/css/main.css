@@ -90,7 +90,30 @@ a a:link, a:hover, a:active, a:focus {
   background-color: #ffffff;
   width: 100%; }
 
-/* SCAFFOLD MENU ITEMS */
+/*.top-menu__content
+ * @media (max-width: $mobile-max-width)
+ *   display: none
+ *
+ * @media (min-width: $desktop-min-width)
+ *   display: block */
+.top-menu__main {
+  float: left; }
+
+.top-menu__overflow {
+  float: left; }
+  .top-menu__overflow:hover .top-menu__overflow-content {
+    display: block; }
+
+.top-menu__overflow-content {
+  display: none;
+  width: 200px;
+  background: #cccccc; }
+
+.top-menu__item {
+  float: left;
+  font-size: 20px; }
+
+/* LEFT MENU */
 .left-menu__item-depth-1, .left-menu__item-depth-2, .left-menu__item-depth-3, .left-menu__item-depth-4, .left-menu__item-depth-5, .left-menu__item-depth-6, .left-menu__item-depth-7, .left-menu__item-depth-8, .left-menu__item-depth-9, .left-menu__item-depth-10 {
   width: 100%;
   height: 50px;
@@ -141,13 +164,6 @@ a a:link, a:hover, a:active, a:focus {
   @media (min-width: 661px) {
     .menu__open-side-menu {
       display: none; } }
-
-@media (max-width: 660px) {
-  .top-menu__content {
-    display: none; } }
-@media (min-width: 661px) {
-  .top-menu__content {
-    display: block; } }
 
 /* SCAFFOLD */
 .scaffold {

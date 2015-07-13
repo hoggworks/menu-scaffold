@@ -8,36 +8,13 @@
   <body class="">
   <div class="scaffold">
     <div class="scaffold__menu">
-      <div class="scaffold__menu-content">
-        <div class="scaffold__menu-close-btn">X</div>
-          <div class="left-menu">
-          <div class="left-menu__item-depth-1" data-role="has_submenu" data-children="option_1">OPTION 1</div>
-          <div class="left-menu__item-depth-2" data-url="index.html" data-parent="option_1">SUB 1</div>
-          <div class="left-menu__item-depth-2" data-url="index.html" data-parent="option_1">SUB 2</div>
-          <div class="left-menu__item-depth-2" data-url="index.html" data-parent="option_1">SUB 3</div>
-          <div class="left-menu__item-depth-2" data-role="has_submenu" data-parent="option_1" data-children="option_2">SUB 4</div>
-          <div class="left-menu__item-depth-3" data-url="index.html" data-parent="option_2">SUB SUB 1</div>
-          <div class="left-menu__item-depth-3" data-url="index.html" data-parent="option_2">SUB SUB 2</div>
-          <div class="left-menu__item-depth-3" data-url="index.html" data-parent="option_2">SUB SUB 3</div>
-          <div class="left-menu__item-depth-3" data-url="index.html" data-parent="option_2">SUB SUB 4</div>
-          <div class="left-menu__item-depth-3" data-role="has_submenu" data-parent="option_2" data-children="option_3">SUB SUB 5</div>
-          <div class="left-menu__item-depth-4" data-url="index.html" data-parent="option_3">SUB SUB SUB 1</div>
-          <div class="left-menu__item-depth-4" data-url="index.html" data-parent="option_3">SUB SUB SUB 2</div>
-          <div class="left-menu__item-depth-4" data-url="index.html" data-parent="option_3">SUB SUB SUB 3</div>
-          <div class="left-menu__item-depth-2" data-url="index.html" data-parent="option_1">SUB 5</div>
-          <div class="left-menu__item-depth-1" data-url="index.html">OPTION 2</div>
-          <div class="left-menu__item-depth-1" data-url="index.html">OPTION 3</div>
-          <div class="left-menu__item-depth-1" data-url="index.html">OPTION 4</div>
-          <div class="left-menu__item-depth-1" data-url="index.html">OPTION 5</div>
-        </div>
+      <div class="scaffold__menu-content" id="left-menu__holder">
+
       </div>
     </div>
     <div class="scaffold__content">
       <div class="scaffold__content-inside">
-        <div class="top-menu">
-          <div class="menu__open-side-menu">MENU</div>
-          <div class="top-menu__content">Top Menu Goes Here</div>
-        </div>
+        <div class="top-menu__holder" id="top-menu__holder"></div>
 
         <h1>CONTENT</h1>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque congue eros sit amet dui ultricies laoreet. Curabitur leo nibh, tempor facilisis nisl eget, auctor iaculis ante. Ut libero turpis, viverra a malesuada imperdiet, venenatis et nulla. Morbi lobortis dignissim orci, quis suscipit orci consequat sed. Fusce efficitur sapien eget felis tristique, vel volutpat purus bibendum. Cras sagittis iaculis maximus. In vehicula ex orci, in aliquam arcu sodales dignissim. Mauris a gravida dui, ac molestie ante. Quisque dapibus augue in ornare blandit. Curabitur id nibh eget neque feugiat porttitor. Sed vitae eros ac risus elementum luctus in vitae nunc. Duis rutrum porta est, ut porta libero vestibulum ac. Curabitur porta est ac lectus porttitor, nec consectetur arcu varius. Sed ullamcorper nisi id pharetra volutpat.</p>
@@ -74,8 +51,9 @@
 
 
   </div>
-
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.js"></script>
   <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script type="text/javascript" src="js/sizeMatters.js"></script>
   <script type="text/javascript" src="js/main.js"></script>
   </body>
 </html>
