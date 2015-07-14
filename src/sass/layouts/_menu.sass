@@ -6,16 +6,16 @@
   background-color: $bg-color
   width: 100%
 
-
-/*.top-menu__content
+.top-menu__content
   @media (max-width: $mobile-max-width)
     display: none
 
   @media (min-width: $desktop-min-width)
-    display: block*/
+    display: block
 
 .top-menu__main
   float: left
+  width: calc(100% - 200px)
 
 .top-menu__overflow
   float: left
@@ -29,10 +29,13 @@
   width: 200px
   background: #cccccc
 
+  .top-menu__item
+    float: none
+
 .top-menu__item
   float: left
-  font-size: 20px
-
+  font-size: 24px
+  margin-right: 20px
 
 /* LEFT MENU */
 %left-menu__item
@@ -62,6 +65,21 @@
 
 .menu__open-side-menu
   display: block
+  cursor: pointer
   @media (min-width: $desktop-min-width)
     display: none
 
+
+
+
+/* FIT TEST STUFF */
+.fit-test
+  width: 200px
+  border: 1px solid black
+
+.fit-test__holder
+  width: 50%
+  margin-left: auto
+  margin-right: auto
+  border: 1px solid black
+  height: 150px

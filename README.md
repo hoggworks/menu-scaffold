@@ -14,8 +14,9 @@ As coded, the menu just slides in from the left when needed, and slides away whe
 # UPDATE
 7/13/2015: Added the beginnings of a class called "SizeMatters," which calculates the size of a DIV prior to insertion on the screen. It'll eventually get blown out into its own repo, but is sort of working right now.
 
+7/15/2015: SizeMatters mostly works, calculating with two methods:
+SizeMatters.howMuchWillFit - this returns a substring of a chunk of text which fits in a specified DOM element.
+SizeMatters.howBigWillThisBe - this returns the size of a specified chunk of text, in a specified class.
+
 # TODO
-Add a top-menu.
-SizeMatters: Need to add support for margin and padding.
-SizeMatters: Need to make willItFit functionality; this lets you determine if a provided string of text will actually fit in the area.
-SizeMatters: Need to make howMuchWillFit functionality; this will give you a substring of text you provide, which will fit in a provided area. (Sort of an intelligent excerpt)
+Add drop-downs for top-level top menu

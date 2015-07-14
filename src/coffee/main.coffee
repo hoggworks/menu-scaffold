@@ -1,6 +1,8 @@
 # menu variables
 menuData = []
-dummyMenuData = [{"name":"item s1", "slug":"item_1", "url":"thing.html"},{"name":"item 2", "slug":"item_2", "children":[{"name":"item_2_1", "slug":"item_2_1", "url":"thing.html", "children":[{"name":"yeehaw?", "slug":"yeehaw", "children":[{"name":"Yeehaw!", "slug":"yeehaw_2"}]}]}]}, {"name":"item 3", "slug":"item_3"}]
+dummyMenuData = [{"name":"item s1", "slug":"item_1", "url":"thing.html"},{"name":"item 2", "slug":"item_2", "children":[{"name":"item_2_1", "slug":"item_2_1", "url":"thing.html", "children":[{"name":"yeehaw?", "slug":"yeehaw", "children":[{"name":"Yeehaw!", "slug":"yeehaw_2"}]}]}]}, {"name":"item 3", "slug":"item_3"}, {"name":"item 4", "slug":"item_4"}, {"name":"item 5", "slug":"item_5"}, {"name":"item 6", "slug":"item_6"}, {"name":"item 7", "slug":"item_7"}, {"name":"item 8", "slug":"item_8"}, {"name":"item 9", "slug":"item_9"}, {"name":"item 10", "slug":"item_10"}]
+
+fitTestText = 'Lorem ipsum dolor sit consectetur adipiscing Mauris at ex id mauris ultrices Praesent blandit faucibus Praesent ac quam et massa lacinia Sed tincidunt fermentum elit sit amet Mauris efficitur libero convallis molestie nulla gravida Etiam eu quam sit amet elit euismod bibendum vitae vel Duis laoreet quis leo et Aenean ipsum laoreet eu euismod convallis et Phasellus lorem consectetur efficitur magna massa consectetur quis pulvinar mauris risus eu Donec quis eros Ut fermentum vitae tellus in Nunc justo malesuada non venenatis ullamcorper id Lorem ipsum dolor sit consectetur adipiscing Mauris at ex id mauris ultrices Praesent blandit faucibus Praesent ac quam et massa lacinia. Holly hanna.Lorem ipsum dolor sit consectetur adipiscing Mauris at ex id mauris ultrices Praesent blandit faucibus Praesent ac quam et massa lacinia Sed tincidunt.'
 
 { div, a, ol, li, i, span, img } = React.DOM
 
@@ -24,29 +26,40 @@ $ ->
     dataType: "json"
     type: 'GET'
     error: (jqXHR, textStatus, errorThrown) ->
-      #console.log("error retrieving data " + jqXHR.responseText)
       console.error("Unable to load menu data remotely: using dummy data")
       parseMenu(dummyMenuData)
     success: (data, textStatus, jqXHR) ->
       parseMenu(data)
 
+  $(window).resize ->
+    showFitTest()
+
+  showFitTest()
+
+showFitTest = ->
+  params =
+    text: fitTestText
+    target: $(".fit-test__holder")
+    className: "fit-test"
+
+  $("#fit-test").html("Calculating...")
+  f = sizeMatters.howMuchWillFit(params)
+  $("#fit-test").html(f)
+
 
 parseMenu = (data, par = null) ->
-  # left menu formatting
+  # menu formatting
   for menu in data
-    # thing
+    howBigOptions =
+      text: menu.name
+      className: "top-menu__item"
+
     tempData =
       name: menu.name
       slug: menu.slug
       url: menu.url
       leftWidth: null
-      topWidth: null
-
-    howBigOptions =
-      text: menu.name
-      className: "top-menu__item"
-
-    console.log sizeMatters.howBigWillThisBe(howBigOptions)
+      topWidth: sizeMatters.howBigWillThisBe(howBigOptions).width
 
     tempData.parent = par if par
     tempData.children = menu.slug if menu.children
@@ -67,11 +80,8 @@ drawLeftMenu = ->
   React.render(window.LeftMenu(obj), where)
 
   # handler for menu
-  $(".menu__open-side-menu").on "click", ->
-    openSideMenu()
-
   $(".scaffold__menu-close-btn").on "click", ->
-    closeSideMenu()
+    closeLeftMenu()
 
   $("[class*='left-menu__item']").on "click", ->
     # this method is for all menu items
@@ -136,7 +146,7 @@ showSubMenuItems = (subMenu) ->
     if data_url
       window.location = data_url
 
-openSideMenu = ->
+openLeftMenu = ->
   # add opened classes to menu
   $(".scaffold__menu").addClass "scaffold__menu--open"
   $(".scaffold__content").addClass "scaffold__content--open"
@@ -147,9 +157,9 @@ openSideMenu = ->
 
   # add click handler to modal
   $(".scaffold__modal").on "click", ->
-    closeSideMenu()
+    closeLeftMenu()
 
-closeSideMenu = ->
+closeLeftMenu = ->
   $(".scaffold__menu").removeClass "scaffold__menu--open"
   $(".scaffold__content").removeClass "scaffold__content--open"
 
@@ -264,19 +274,34 @@ TopMenu = React.createFactory React.createClass
     overflowMenu: []
 
   componentWillMount: ->
+    window.addEventListener('resize', @recalculateTopMenu)
     @populateMenus()
+
+  componentDidMount: ->
+    @populateMenus()
+
+  recalculateTopMenu: ->
+    @populateMenus()
+
+  componentWillUnMount: ->
+    window.removeEventListener('resize', @recalculateTopMenu)
 
   populateMenus: () ->
     @currentWidth = 0
     mainMenu = []
     overflowMenu = []
 
-    availableWidth = 100000
-    console.log menuData
-    for menu_item in menuData
-      @currentWidth += menu_item.topWidth
+    # how much width is currently available?
+    availableWidth = $(".top-menu__main").width()
 
-      console.log @currentWidth
+    if !availableWidth?
+      # initially everything gets dropped in the overflow
+      availableWidth = 0
+    for menu_item in menuData
+
+      # only count top-level items; ignore items that are children
+      if !menu_item.parent?
+        @currentWidth += menu_item.topWidth
 
       if @currentWidth > availableWidth
         overflowMenu.push menu_item
@@ -291,16 +316,20 @@ TopMenu = React.createFactory React.createClass
 
   render: ->
     div {className: "top-menu"},
-      div {className: "top-menu__main"},
-        for menu_item in @state.mainMenu
-          div {className: "top-menu__item"},
-            menu_item.name
-      div {className: "top-menu__overflow"},
-        div {className: "top-menu__overflow-icon"},
-          "***"
-        div {className: "top-menu__overflow-content"},
-          for menu_item in @state.overflowMenu
-            div {className: "top-menu__item"},
-              menu_item.name
+      div {className: "menu__open-side-menu", onClick:openLeftMenu},
+        "MENU"
+      div {className: "top-menu__content"},
+        div {className: "top-menu__main"},
+          for menu_item in @state.mainMenu
+            if !menu_item.parent?
+              div {className: "top-menu__item"},
+                menu_item.name
+        div {className: "top-menu__overflow"},
+          div {className: "top-menu__overflow-icon"},
+            "***"
+          div {className: "top-menu__overflow-content"},
+            for menu_item in @state.overflowMenu
+              div {className: "top-menu__item"},
+                menu_item.name
 
 window.TopMenu = TopMenu
