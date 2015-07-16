@@ -40,11 +40,6 @@
   font-size: 24px
   margin-right: 20px
 
-.sub-menu__item
-  float: left
-  font-size: 20px
-  margin-right: 20px
-
 /* LEFT MENU */
 %left-menu__item
   width: 100%
@@ -67,6 +62,10 @@
     @extend %left-menu__item
     background: darken($left-menu-item-bg-color, nth($left-menu-darken-amounts, $i))
 
+  .sub-menu__item-depth-#{$i}
+    @extend %left-menu__item
+    background: darken($left-menu-item-bg-color, nth($left-menu-darken-amounts, $i))
+
 
 [data-role="has_submenu"]::after
   content: '>'
@@ -75,21 +74,29 @@
 [data-parent]
   display: none
 
-
 .menu__open-side-menu
   display: block
   cursor: pointer
   @media (min-width: $desktop-min-width)
     display: none
 
-
 /* SUB MENU */
 .sub-menu
   position: fixed
-  display: none
+  top: 35
+  left: 10
+  width: 150
+  z-index: 1000
+  background: #fff
 
 .sub-menu--visible
   display: box
+
+.sub-menu__item
+  float: left
+  font-size: 20px
+  margin-right: 20px
+  cursor: pointer
 
 
 /* FIT TEST STUFF */
