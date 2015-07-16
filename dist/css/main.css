@@ -103,6 +103,8 @@ a a:link, a:hover, a:active, a:focus {
 
 .top-menu__overflow {
   float: left; }
+  .top-menu__overflow--hidden {
+    display: none; }
   .top-menu__overflow:hover .top-menu__overflow-content {
     display: block; }
 
@@ -118,8 +120,13 @@ a a:link, a:hover, a:active, a:focus {
   font-size: 24px;
   margin-right: 20px; }
 
+.sub-menu__item {
+  float: left;
+  font-size: 20px;
+  margin-right: 20px; }
+
 /* LEFT MENU */
-.left-menu__item-depth-1, .left-menu__item-depth-2, .left-menu__item-depth-3, .left-menu__item-depth-4, .left-menu__item-depth-5, .left-menu__item-depth-6, .left-menu__item-depth-7, .left-menu__item-depth-8, .left-menu__item-depth-9, .left-menu__item-depth-10 {
+.left-menu__item-depth-1, .top-menu__item-depth-1, .left-menu__item-depth-2, .top-menu__item-depth-2, .left-menu__item-depth-3, .top-menu__item-depth-3, .left-menu__item-depth-4, .top-menu__item-depth-4, .left-menu__item-depth-5, .top-menu__item-depth-5, .left-menu__item-depth-6, .top-menu__item-depth-6, .left-menu__item-depth-7, .top-menu__item-depth-7, .left-menu__item-depth-8, .top-menu__item-depth-8, .left-menu__item-depth-9, .top-menu__item-depth-9, .left-menu__item-depth-10, .top-menu__item-depth-10 {
   width: 100%;
   height: 50px;
   padding-top: 20px;
@@ -130,31 +137,61 @@ a a:link, a:hover, a:active, a:focus {
 .left-menu__item-depth-1 {
   background: #ededed; }
 
+.top-menu__item-depth-1 {
+  background: #ededed; }
+
 .left-menu__item-depth-2 {
+  background: #e3e3e3; }
+
+.top-menu__item-depth-2 {
   background: #e3e3e3; }
 
 .left-menu__item-depth-3 {
   background: gainsboro; }
 
+.top-menu__item-depth-3 {
+  background: gainsboro; }
+
 .left-menu__item-depth-4 {
+  background: #d1d1d1; }
+
+.top-menu__item-depth-4 {
   background: #d1d1d1; }
 
 .left-menu__item-depth-5 {
   background: #c7c7c7; }
 
+.top-menu__item-depth-5 {
+  background: #c7c7c7; }
+
 .left-menu__item-depth-6 {
+  background: #bdbdbd; }
+
+.top-menu__item-depth-6 {
   background: #bdbdbd; }
 
 .left-menu__item-depth-7 {
   background: #b3b3b3; }
 
+.top-menu__item-depth-7 {
+  background: #b3b3b3; }
+
 .left-menu__item-depth-8 {
+  background: darkgray; }
+
+.top-menu__item-depth-8 {
   background: darkgray; }
 
 .left-menu__item-depth-9 {
   background: #9e9e9e; }
 
+.top-menu__item-depth-9 {
+  background: #9e9e9e; }
+
 .left-menu__item-depth-10 {
+  background: #949494; }
+
+.top-menu__item-depth-10 {
   background: #949494; }
 
 [data-role="has_submenu"]::after {
@@ -171,9 +208,17 @@ a a:link, a:hover, a:active, a:focus {
     .menu__open-side-menu {
       display: none; } }
 
+/* SUB MENU */
+.sub-menu {
+  position: fixed;
+  display: none; }
+
+.sub-menu--visible {
+  display: box; }
+
 /* FIT TEST STUFF */
 .fit-test {
-  width: 200px;
+  width: 50%;
   border: 1px solid black; }
 
 .fit-test__holder {

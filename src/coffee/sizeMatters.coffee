@@ -102,8 +102,6 @@ class window.SizeMatters
         # down the chain.
         checkDirection = -1
 
-
-      console.log distance, checkDirection
       checkIndex += Math.floor(checkDirection*(distance))
 
       currentText = fullText

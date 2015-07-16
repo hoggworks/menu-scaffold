@@ -99,7 +99,6 @@
         } else {
           checkDirection = -1;
         }
-        console.log(distance, checkDirection);
         checkIndex += Math.floor(checkDirection * distance);
         currentText = fullText.slice(0, checkIndex).join("") + suffix;
       }

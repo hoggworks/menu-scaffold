@@ -1,6 +1,6 @@
 # menu variables
 menuData = []
-dummyMenuData = [{"name":"item s1", "slug":"item_1", "url":"thing.html"},{"name":"item 2", "slug":"item_2", "children":[{"name":"item_2_1", "slug":"item_2_1", "url":"thing.html", "children":[{"name":"yeehaw?", "slug":"yeehaw", "children":[{"name":"Yeehaw!", "slug":"yeehaw_2"}]}]}]}, {"name":"item 3", "slug":"item_3"}, {"name":"item 4", "slug":"item_4"}, {"name":"item 5", "slug":"item_5"}, {"name":"item 6", "slug":"item_6"}, {"name":"item 7", "slug":"item_7"}, {"name":"item 8", "slug":"item_8"}, {"name":"item 9", "slug":"item_9"}, {"name":"item 10", "slug":"item_10"}]
+dummyMenuData = [{"name":"item s1", "slug":"item_1", "url":"thing.html"},{"name":"item 2", "slug":"item_2", "children":[{"name":"item_2_1", "slug":"item_2_1", "url":"thing.html", "children":[{"name":"yeehaw?", "slug":"yeehaw", "children":[{"name":"Yeehaw!", "slug":"yeehaw_2"}]}]}]}, {"name":"item 3", "slug":"item_3"}, {"name":"item 4", "slug":"item_4"}, {"name":"item 5", "slug":"item_5"}, {"name":"item 6", "slug":"item_6"}, {"name":"item 7", "slug":"item_7"}, {"name":"item 8", "slug":"item_8"}, {"name":"item 9", "slug":"item_9"}, {"name":"item 10", "slug":"item_10", "children":[{"name":"1", "slug":"item_1", "url":"thing.html"}, {"name":"2", "slug":"item_2", "url":"thing.html"}, {"name":"3", "slug":"item_3", "url":"thing.html"}, {"name":"4", "slug":"item_4", "url":"thing.html"}, {"name":"5", "slug":"item_5", "url":"thing.html", "children":[{"name":"..1", "slug":"item_1", "url":"thing.html"}, {"name":"..2", "slug":"item_1", "url":"thing.html"}, {"name":"..3", "slug":"item_1", "url":"thing.html"}]}]}, {"name":"item 11", "slug":"item_11", "url":"what.html"}, {"name":"item 12", "slug":"item_1", "url":"thing.html"}]
 
 fitTestText = 'Lorem ipsum dolor sit consectetur adipiscing Mauris at ex id mauris ultrices Praesent blandit faucibus Praesent ac quam et massa lacinia Sed tincidunt fermentum elit sit amet Mauris efficitur libero convallis molestie nulla gravida Etiam eu quam sit amet elit euismod bibendum vitae vel Duis laoreet quis leo et Aenean ipsum laoreet eu euismod convallis et Phasellus lorem consectetur efficitur magna massa consectetur quis pulvinar mauris risus eu Donec quis eros Ut fermentum vitae tellus in Nunc justo malesuada non venenatis ullamcorper id Lorem ipsum dolor sit consectetur adipiscing Mauris at ex id mauris ultrices Praesent blandit faucibus Praesent ac quam et massa lacinia. Holly hanna.Lorem ipsum dolor sit consectetur adipiscing Mauris at ex id mauris ultrices Praesent blandit faucibus Praesent ac quam et massa lacinia Sed tincidunt.'
 
@@ -39,12 +39,10 @@ $ ->
 showFitTest = ->
   params =
     text: fitTestText
-    target: $(".fit-test__holder")
+    target: $("#fit-test")
     className: "fit-test"
 
-  $("#fit-test").html("Calculating...")
-  f = sizeMatters.howMuchWillFit(params)
-  $("#fit-test").html(f)
+  $("#fit-test").html(sizeMatters.howMuchWillFit(params))
 
 
 parseMenu = (data, par = null) ->
@@ -72,6 +70,7 @@ parseMenu = (data, par = null) ->
     # draw react component
     drawLeftMenu()
     drawTopMenu()
+    drawSubMenu()
 
 drawLeftMenu = ->
   # draw react menu
@@ -108,6 +107,17 @@ drawTopMenu = ->
   obj = {menu_data: menuData}
   where = document.getElementById("top-menu__holder")
   React.render(window.TopMenu(obj), where)
+
+  $(".top-menu__overflow-content .top-menu__item").on "click", ->
+    # this method is for all menu items
+    showSubMenuItems($(this))
+
+drawSubMenu = ->
+  obj = {menu: []}
+  where = document.getElementById("sub-menu__holder")
+  React.render(window.TopMenu(obj), where)
+
+  # put event handlers here?
 
 
 showSubMenuItems = (subMenu) ->
@@ -313,23 +323,93 @@ TopMenu = React.createFactory React.createClass
 
     @render()
 
+  showSubMenu: (thing) ->
+    console.log "show sub menu"
+    # rough it in with the overflow menu
+    caller = thing
+
+
+  hideSubMenu: ->
+    console.log "hide sub menu"
+
 
   render: ->
+    # show or hide the overflow menu
+    overflow_menu_class = "top-menu__overflow"
+    if @state.overflowMenu.length < 1
+      overflow_menu_class += "--hidden"
+
     div {className: "top-menu"},
       div {className: "menu__open-side-menu", onClick:openLeftMenu},
         "MENU"
       div {className: "top-menu__content"},
         div {className: "top-menu__main"},
           for menu_item in @state.mainMenu
+            menu_item_options =
+              className: "top-menu__item"
+
+            if menu_item.children
+              # has children; also is a subnav
+              menu_item_options['data-role'] = 'has_submenu'
+              menu_item_options['data-children'] = menu_item.slug
+
+              # add rollover handler
+              menu_item_options.onMouseOver = (e) -> @showSubMenu(menu_item.slug)
+              menu_item_options.onMouseOut = @hideSubMenu
+
+            if menu_item.parent
+              menu_item_options['data-parent'] = menu_item.parent
+
+            if menu_item.url?
+              menu_item_options['data-url'] = menu_item.url
+
+            # don't draw items that are children
             if !menu_item.parent?
-              div {className: "top-menu__item"},
-                menu_item.name
-        div {className: "top-menu__overflow"},
-          div {className: "top-menu__overflow-icon"},
-            "***"
-          div {className: "top-menu__overflow-content"},
-            for menu_item in @state.overflowMenu
-              div {className: "top-menu__item"},
+              div menu_item_options,
                 menu_item.name
 
+        div {className: overflow_menu_class},
+          div
+            className: "top-menu__overflow-icon"
+            onMouseOver: (e) -> @showSubMenu('overflow')
+            onMouseOut: @hideSubMenu
+            "***"
+
 window.TopMenu = TopMenu
+
+###
+  SUB MENU - THIS IS FOR EVERYTHING THAT DROPS BELOW THE MAIN NAV STRIP
+  INCLUDING THE OVERFLOW
+###
+
+SubMenu = React.createFactory React.createClass
+  getInitialState: ->
+    menu: []
+
+  componentWillMount: ->
+    @setState menu: @props.menu
+
+  render: ->
+    div {className: "sub-menu"},
+      for menu_item in @state.menu
+        menu_item_options =
+          className: "sub-menu__item"
+
+        if menu_item.children
+          # has children; also is a subnav
+          menu_item_options['data-role'] = 'has_submenu'
+          menu_item_options['data-children'] = menu_item.slug
+
+        if menu_item.parent
+          menu_item_options['data-parent'] = menu_item.parent
+
+        if menu_item.url?
+          menu_item_options['data-url'] = menu_item.url
+
+        menu_item_options.className += ' sub-menu__item-depth-'
+        menu_item_options.className += determineDepth(menu_item)
+
+        div menu_item_options,
+          menu_item.name
+
+window.SubMenu = SubMenu
