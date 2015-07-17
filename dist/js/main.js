@@ -237,6 +237,7 @@
   showSubMenuItems = function(subMenu) {
     var child_element_val, child_state, data_url, new_child_state;
     if (subMenu.data('role') === 'has_submenu') {
+      console.log("has submenu");
       child_state = subMenu.data('child_state');
       new_child_state = 'visible';
       if (child_state != null) {
@@ -247,6 +248,7 @@
         }
       }
       child_element_val = subMenu.data('children');
+      console.log("new child_state", new_child_state, child_element_val);
       $("*[data-parent='" + child_element_val + "']").each(function() {
         if (new_child_state === 'hidden') {
           $(this).slideUp();
@@ -446,7 +448,6 @@
     },
     showSubMenu: function(ref) {
       var item, slug;
-      console.ref;
       if (ref.target != null) {
         slug = $(ref.target).data('children');
         item = $(ref.target);
@@ -578,7 +579,6 @@
       } else {
         targ = $(".top-menu__main").find('*[data-children="' + this.props.mainParent + '"]');
       }
-      console.log(targ);
       return $(".sub-menu").css('left', (targ.offset().left));
     },
     render: function() {
@@ -595,6 +595,7 @@
         for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
           menu_item = _ref1[_i];
           menu_item_options = {
+            id: "id-" + Math.floor(Math.random() * 50000),
             className: "sub-menu__item"
           };
           if (menu_item.children) {

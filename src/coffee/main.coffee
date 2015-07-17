@@ -110,6 +110,7 @@ drawTopMenu = ->
 showSubMenuItems = (subMenu) ->
   # if menu item has children, it will toggle the visibility
   if subMenu.data('role') == 'has_submenu'
+    console.log "has submenu"
     child_state = subMenu.data 'child_state'
     new_child_state = 'visible' # default
 
@@ -120,6 +121,8 @@ showSubMenuItems = (subMenu) ->
         new_child_state = 'visible'
 
     child_element_val = subMenu.data 'children'
+
+    console.log "new child_state", new_child_state, child_element_val
 
     $("*[data-parent='"+child_element_val+"']").each ->
       if new_child_state == 'hidden'
@@ -327,7 +330,6 @@ TopMenu = React.createFactory React.createClass
 
 
   showSubMenu: (ref) ->
-    console.ref
     if ref.target?
       # calcualte slug
       # TODO: Remove jQuery dependency?
@@ -437,8 +439,6 @@ SubMenu = React.createFactory React.createClass
       targ = $(".top-menu__main")
       .find('*[data-children="'+@props.mainParent+'"]')
 
-    console.log targ
-
     $(".sub-menu").css('left', (targ.offset().left))
 
   render: ->
@@ -449,6 +449,7 @@ SubMenu = React.createFactory React.createClass
     div {className: "sub-menu"},
       for menu_item in @props.menu
         menu_item_options =
+          id: "id-"+Math.floor(Math.random()*50000)
           className: "sub-menu__item"
 
         if menu_item.children
