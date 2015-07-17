@@ -223,9 +223,6 @@ a a:link, a:hover, a:active, a:focus {
   content: ">";
   margin-left: 5px; }
 
-[data-parent] {
-  display: none; }
-
 .menu__open-side-menu {
   display: block;
   cursor: pointer; }

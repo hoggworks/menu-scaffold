@@ -1,6 +1,6 @@
 # menu variables
 menuData = []
-dummyMenuData = [{"name":"item s1", "slug":"item_1", "url":"thing.html"},{"name":"item 2", "slug":"item_2", "children":[{"name":"item_2_1", "slug":"item_2_1", "url":"thing.html", "children":[{"name":"yeehaw?", "slug":"yeehaw", "children":[{"name":"Yeehaw!", "slug":"yeehaw_2"}]}]}]}, {"name":"item 3", "slug":"item_3"}, {"name":"item 4", "slug":"item_4"}, {"name":"item 5", "slug":"item_5"}, {"name":"item 6", "slug":"item_6"}, {"name":"item 7", "slug":"item_7"}, {"name":"item 8", "slug":"item_8"}, {"name":"item 9", "slug":"item_9"}, {"name":"item 10", "slug":"item_10", "children":[{"name":"1", "slug":"item_1", "url":"thing.html"}, {"name":"2", "slug":"item_2sub", "url":"thing.html"}, {"name":"3", "slug":"item_3", "url":"thing.html"}, {"name":"4", "slug":"item_4", "url":"thing.html"}, {"name":"5", "slug":"item_5", "url":"thing.html", "children":[{"name":"..1", "slug":"item_1", "url":"thing.html"}, {"name":"..2", "slug":"item_1", "url":"thing.html"}, {"name":"..3", "slug":"item_1", "url":"thing.html"}]}]}, {"name":"item 11", "slug":"item_11", "url":"what.html"}, {"name":"item 12", "slug":"item_12", "url":"thing.html", "children":[{"name":"eof", "slug":"eof"}]}]
+dummyMenuData = [{"name":"item s1", "slug":"item_1", "url":"thing.html"},{"name":"item 2", "slug":"item_2", "children":[{"name":"item_2_1", "slug":"item_2_1", "url":"thing.html", "children":[{"name":"yeehaw?", "slug":"yeehaw", "children":[{"name":"Yeehaw!", "slug":"yeehaw_2", "url":"http://yahoo.com"}]}]}]}, {"name":"item 3", "slug":"item_3"}, {"name":"item 4", "slug":"item_4"}, {"name":"item 5", "slug":"item_5"}, {"name":"item 6", "slug":"item_6"}, {"name":"item 7", "slug":"item_7"}, {"name":"item 8", "slug":"item_8", "children":[{"name":"child of 8", "slug":"child_of_8"}]}, {"name":"item 9", "slug":"item_9"}, {"name":"item 10", "slug":"item_10", "children":[{"name":"1", "slug":"item_1", "url":"thing.html"}, {"name":"2", "slug":"item_2sub", "url":"thing.html"}, {"name":"3", "slug":"item_3", "url":"thing.html"}, {"name":"4", "slug":"item_4", "url":"thing.html"}, {"name":"5", "slug":"item_5", "url":"thing.html", "children":[{"name":"..1", "slug":"item_1", "url":"thing.html"}, {"name":"..2", "slug":"item_1", "url":"thing.html"}, {"name":"..3", "slug":"item_1", "url":"thing.html"}]}]}, {"name":"item 11", "slug":"item_11", "url":"what.html"}, {"name":"item 12", "slug":"item_12", "url":"thing.html", "children":[{"name":"eof", "slug":"eof"}]}]
 
 fitTestText = 'Lorem ipsum dolor sit consectetur adipiscing Mauris at ex id mauris ultrices Praesent blandit faucibus Praesent ac quam et massa lacinia Sed tincidunt fermentum elit sit amet Mauris efficitur libero convallis molestie nulla gravida Etiam eu quam sit amet elit euismod bibendum vitae vel Duis laoreet quis leo et Aenean ipsum laoreet eu euismod convallis et Phasellus lorem consectetur efficitur magna massa consectetur quis pulvinar mauris risus eu Donec quis eros Ut fermentum vitae tellus in Nunc justo malesuada non venenatis ullamcorper id Lorem ipsum dolor sit consectetur adipiscing Mauris at ex id mauris ultrices Praesent blandit faucibus Praesent ac quam et massa lacinia. Holly hanna.Lorem ipsum dolor sit consectetur adipiscing Mauris at ex id mauris ultrices Praesent blandit faucibus Praesent ac quam et massa lacinia Sed tincidunt.'
 
@@ -32,6 +32,11 @@ $ ->
       parseMenu(data)
 
   $(window).resize ->
+    # close left menu
+    if $(window).width() >= 660 and $(".scaffold__modal")
+      closeLeftMenu()
+
+
     showFitTest()
 
   showFitTest()
@@ -57,9 +62,12 @@ parseMenu = (data, par = null) ->
       slug: menu.slug
       url: menu.url
       leftWidth: null
+      visible: 1
       topWidth: sizeMatters.howBigWillThisBe(howBigOptions).width
 
-    tempData.parent = par if par
+    if par?
+      tempData.parent = par
+
     tempData.children = menu.slug if menu.children
 
     menuData.push tempData
@@ -110,7 +118,6 @@ drawTopMenu = ->
 showSubMenuItems = (subMenu) ->
   # if menu item has children, it will toggle the visibility
   if subMenu.data('role') == 'has_submenu'
-    console.log "has submenu"
     child_state = subMenu.data 'child_state'
     new_child_state = 'visible' # default
 
@@ -288,6 +295,56 @@ TopMenu = React.createFactory React.createClass
   componentWillUnMount: ->
     window.removeEventListener('resize', @recalculateTopMenu)
 
+  toggleVisibilityOfChildrenOf: (slug, visibility_value = null) ->
+    # this method recursively hides children (and their children)
+    # not real, human children, though: I'm talking about child elements.
+
+    # your kids are probably safe.
+    menus = @state.menus
+    activeMenu = menus[@state.activeSubMenu]
+
+    console.log "slug", slug
+    for menu_item in activeMenu
+
+      if menu_item.parent? and menu_item.parent == slug
+        console.log "old visibility ", menu_item.visible
+        if menu_item.visible == 0
+          menu_item.visible = 1
+        else if menu_item.visible == 1
+          menu_item.visible = 0
+
+        # enact override
+        if visibility_value?
+          menu_item.visible = visibility_value
+
+        console.log "new visibility ", menu_item.visible
+
+        if menu_item.children? and menu_item.visible == 0
+          console.log "going recursive"
+          # recursively hide children, but don't recursively show them
+          @toggleVisibilityOfChildrenOf(menu_item.children, 0)
+
+    menus[@state.activeSubMenu] = activeMenu
+
+
+    @setState menus : menus
+
+    console.log @state.menus[@state.activeSubMenu]
+
+  showSubMenuItems: (menu_item) ->
+    # if menu item has children, it will toggle the visibility
+    if menu_item.children?
+      # iterate through active menu items
+      # find any with the correct subnavs
+      # flip their visibility
+      # go down and find children (recursively) and turn off their visibility
+      menus = @state.menus[@state.activeSubMenu]
+      @toggleVisibilityOfChildrenOf(menu_item.children)
+    else
+      # no children, set window.location to data-url attribute
+      if menu_item.url?
+        window.location = menu_item.url
+
   populateMenus: () ->
     @currentWidth = 0
     mainMenu = []
@@ -295,7 +352,7 @@ TopMenu = React.createFactory React.createClass
     menus = {}
 
     # how much width is currently available?
-    availableWidth = $(".top-menu__main").width()
+    availableWidth = $(".top-menu__main").outerWidth()
 
     if !availableWidth?
       # initially everything gets dropped in the overflow
@@ -328,24 +385,25 @@ TopMenu = React.createFactory React.createClass
     # update menus state
     @setState menus: menus
 
+  showSubMenu: (slug) ->
+    # reset visibility
+    all_menus = @state.menus
+    current_menu = all_menus[slug]
+    for menu_item in current_menu
+      if menu_item.parent? && menu_item.parent != slug
+        menu_item.visible = 0
+      else
+        menu_item.visible = 1
 
-  showSubMenu: (ref) ->
-    if ref.target?
-      # calcualte slug
-      # TODO: Remove jQuery dependency?
-      slug = $(ref.target).data('children')
-      item = $(ref.target)
-    else
-      # overflow
-      item = $(".top-menu__overflow")
-      slug = ref
+    all_menus[slug] = current_menu
+    @setState menus: all_menus
 
+    # assign sub menu values
     @setState mainParent: slug
     @setState activeSubMenu: slug
 
 
   hideSubMenu: ->
-    #console.log "hide sub menu"
     @setState activeSubMenu: []
     @setState mainParent: ''
 
@@ -360,7 +418,6 @@ TopMenu = React.createFactory React.createClass
           menu_items = menu_items.concat(child_menu_items)
     return menu_items
 
-
   render: ->
     # show or hide the overflow menu
     overflow_menu_class = "top-menu__overflow"
@@ -373,30 +430,11 @@ TopMenu = React.createFactory React.createClass
       div {className: "top-menu__content"},
         div {className: "top-menu__main"},
           for menu_item in @state.mainMenu
-            menu_item_options =
-              className: "top-menu__item"
-
-            if menu_item.children
-              # has children; also is a subnav
-              menu_item_options['data-role'] = 'has_submenu'
-              menu_item_options['data-children'] = menu_item.slug
-
-              # add rollover handler
-              menu_item_options.onMouseOver = (e) =>
-                @showSubMenu(e)
-              #menu_item_options.onMouseOut = @hideSubMenu
-
-            if menu_item.parent
-              menu_item_options['data-parent'] = menu_item.parent
-
-            if menu_item.url?
-              menu_item_options['data-url'] = menu_item.url
-
-            # don't draw items that are children
             if !menu_item.parent?
-              div menu_item_options,
-                menu_item.name
-
+              TopMenuItem {
+                menu_item: menu_item
+                showSubMenu: @showSubMenu
+              }
         div {className: overflow_menu_class},
           div
             className: "top-menu__overflow-icon"
@@ -406,9 +444,36 @@ TopMenu = React.createFactory React.createClass
         if @state.activeSubMenu > ''
           SubMenu {
             menu: @state.menus[@state.activeSubMenu]
-            mainParent:@state.mainParent
-            showSubMenuItems: @showSubMenuItems
+            mainParent: @state.mainParent
+            showSubMenuItems: (e) => @showSubMenuItems(e)
           }
+
+TopMenuItem = React.createFactory React.createClass
+  showSubMenu: ->
+    @props.showSubMenu(@props.menu_item.slug)
+
+  render: ->
+    menu_item = @props.menu_item
+    menu_item_options =
+      className: "top-menu__item"
+
+    if menu_item.children
+      # has children; also is a subnav
+      menu_item_options['data-role'] = 'has_submenu'
+      menu_item_options['data-children'] = menu_item.slug
+
+      # add rollover handler
+      menu_item_options.onMouseOver = @showSubMenu
+      #menu_item_options.onMouseOut = @hideSubMenu
+
+    if menu_item.parent
+      menu_item_options['data-parent'] = menu_item.parent
+
+    if menu_item.url?
+      menu_item_options['data-url'] = menu_item.url
+
+    div menu_item_options,
+      menu_item.name
 
 window.TopMenu = TopMenu
 
@@ -422,9 +487,6 @@ SubMenu = React.createFactory React.createClass
     menu: []
     mainParent: ''
 
-  menuItemClicked: (e) ->
-    showSubMenuItems($(e.target))
-
   componentDidMount: ->
     @repositionSelf()
 
@@ -433,6 +495,7 @@ SubMenu = React.createFactory React.createClass
 
   repositionSelf: ->
     # this method moves the sub nav under the appropriate menu item
+    # TODO: Make this get the position via React, if appropriate?
     if @props.mainParent == 'overflow'
       targ = $(".top-menu__overflow")
     else
@@ -442,32 +505,43 @@ SubMenu = React.createFactory React.createClass
     $(".sub-menu").css('left', (targ.offset().left))
 
   render: ->
-    if @props.menu.length > 0
-      # something is here, reposition element
-      1 == 1
-
     div {className: "sub-menu"},
       for menu_item in @props.menu
-        menu_item_options =
-          id: "id-"+Math.floor(Math.random()*50000)
-          className: "sub-menu__item"
+        if menu_item.visible == 1
+          SubMenuItem {
+            menu_item: menu_item
+            showSubMenuItems: (e) => @props.showSubMenuItems(e)
+            menu: @props.menu
+          }
 
-        if menu_item.children
-          # has children; also is a subnav
-          menu_item_options['data-role'] = 'has_submenu'
-          menu_item_options['data-children'] = menu_item.slug
 
-        if menu_item.parent? and menu_item.parent != @props.mainParent
-          menu_item_options['data-parent'] = menu_item.parent
+SubMenuItem = React.createFactory React.createClass
+  menuItemClicked: ->
+    @props.showSubMenuItems(@props.menu_item)
 
-        if menu_item.url?
-          menu_item_options['data-url'] = menu_item.url
+  render: ->
+    menu_item = @props.menu_item
 
-        menu_item_options.className = 'sub-menu__item-depth-'
-        menu_item_options.className += determineDepth(menu_item)
-        menu_item_options.onClick = @menuItemClicked
+    menu_item_options =
+      className: "sub-menu__item"
 
-        div menu_item_options,
-          menu_item.name
+    if menu_item.children
+      # has children; also is a subnav
+      menu_item_options['data-role'] = 'has_submenu'
+      menu_item_options['data-children'] = menu_item.slug
 
-window.SubMenu = SubMenu
+    if menu_item.parent? and menu_item.parent != @props.mainParent
+      menu_item_options['data-parent'] = menu_item.parent
+
+    if menu_item.url?
+      menu_item_options['data-url'] = menu_item.url
+
+    menu_item_options.className = 'sub-menu__item-depth-'
+    menu_item_options.className += determineDepth(menu_item)
+    menu_item_options.onClick = @menuItemClicked
+
+    # only draw if item is currently set to visible
+    if !menu_item.hidden?
+      div menu_item_options,
+        menu_item.name
+
