@@ -67,15 +67,10 @@
     background: darken($left-menu-item-bg-color, nth($left-menu-darken-amounts, $i))
 
 
-[data-role="has_submenu"]::after
-  content: '>'
-  margin-left: 5px
+/* generic style to add flourish for anything with a submenu */
+[data-role="has_submenu"]
+  font-weight: bold
 
-.menu__open-side-menu
-  display: block
-  cursor: pointer
-  @media (min-width: $desktop-min-width)
-    display: none
 
 /* SUB MENU */
 .sub-menu
@@ -95,6 +90,12 @@
   margin-right: 20px
   cursor: pointer
 
+.menu__open-side-menu
+  float: left
+
+  @media (min-width: $desktop-min-width)
+    display: none
+
 
 /* FIT TEST STUFF */
 .fit-test
@@ -107,3 +108,4 @@
   margin-right: auto
   border: 1px solid black
   height: 150px
+

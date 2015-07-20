@@ -219,16 +219,9 @@ a a:link, a:hover, a:active, a:focus {
 .sub-menu__item-depth-10 {
   background: #949494; }
 
-[data-role="has_submenu"]::after {
-  content: ">";
-  margin-left: 5px; }
-
-.menu__open-side-menu {
-  display: block;
-  cursor: pointer; }
-  @media (min-width: 661px) {
-    .menu__open-side-menu {
-      display: none; } }
+/* generic style to add flourish for anything with a submenu */
+[data-role="has_submenu"] {
+  font-weight: bold; }
 
 /* SUB MENU */
 .sub-menu {
@@ -247,6 +240,12 @@ a a:link, a:hover, a:active, a:focus {
   font-size: 20px;
   margin-right: 20px;
   cursor: pointer; }
+
+.menu__open-side-menu {
+  float: left; }
+  @media (min-width: 661px) {
+    .menu__open-side-menu {
+      display: none; } }
 
 /* FIT TEST STUFF */
 .fit-test {
@@ -272,14 +271,9 @@ a a:link, a:hover, a:active, a:focus {
   height: 100%;
   position: fixed;
   background: transparent;
-  left: 0px;
-  top: 0px;
-  z-index: 3; }
-
-.scaffold__modal--open {
   left: 200px;
-  -webkit-transition: left 0.2s;
-  transition: left 0.2s; }
+  top: 0px;
+  z-index: 101; }
 
 /* SCAFFOLD MENU */
 .scaffold__menu {
